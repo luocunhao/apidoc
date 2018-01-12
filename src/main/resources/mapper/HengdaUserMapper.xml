@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.hengda.app.mapper.HengdaUserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="HengdaUser" type="com.pl.hengda.app.model.HengdaUser">
+        <result column="userid" property="userid" />
+        <result column="username" property="username" />
+        <result column="phone" property="phone" />
+        <result column="channel" property="channel" />
+        <result column="consultant" property="consultant" />
+    </resultMap>
+
+    <select id="getUserById" resultType="com.pl.hengda.app.model.HengdaUser" parameterType="Map">
+        select * from hengdauser where userid = #{userid}
+    </select>
+    <update id="updateUser" parameterType="com.pl.hengda.app.model.HengdaUser" >
+       update hengdauser set username=#{username},phone=#{phone},channel=#{channel} where userid = #{userid}
+    </update>
+    <select id="getUserByPhone" resultType="com.pl.hengda.app.model.HengdaUser" parameterType="Map">
+        select * from hengdauser where phone = #{phone}
+    </select>
+    <insert id="addUser"  parameterType="com.pl.hengda.app.model.HengdaUser">
+         insert into hengdauser(userid,username,phone,channel)
+        VALUES (#{userid},#{username},#{phone},#{channel})
+    </insert>
+    <update id="setConidByUserid" parameterType="Map" >
+        update hengdauser set consultant=#{conid} where userid = #{userid}
+    </update>
+    <select id="getConsultanPhoneByUserid" resultType="String" parameterType="Map">
+        select phone from zhiyeguwen where id = (SELECT consultant from hengdauser where userid = #{userid} )
+    </select>
+</mapper>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.hengda.app.mapper.ISemanticSlotsDao">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.pl.hengda.app.model.SemanticSlots">
+		<id column="slot_id" property="slotId" />
+		<result column="template_service" property="templateService" />
+		<result column="template_intent" property="templateIntent" />
+		<result column="slot_code" property="slotCode" />
+		<result column="slot_name" property="slotName" />
+		<result column="slot_value" property="slotValue" />
+		<result column="required" property="required" />
+		<result column="default_value" property="defaultValue" />
+		<result column="prompt" property="prompt" />
+		<result column="utterance" property="utterance" />
+		<result column="word_class" property="wordClass" />
+		<result column="slot_order" property="slotOrder" />
+		<result column="try_count" property="tryCount" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		slot_id, template_service, template_intent, slot_code, slot_name, slot_value, required,
+		 default_value, prompt, utterance, word_class, slot_order, try_count
+	</sql>
+
+	<select id="getSemanticSlotsByKey" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from ai_user_dialog_slot
+		<where>
+			template_service = #{servername} and template_intent =#{intent} and app_id =#{appid}
+		</where>
+	</select>
+
+	<select id="isSemanticModelExist" resultType="boolean">
+		SELECT COUNT(template_id)
+		FROM ai_user_dialog_template
+		<where>
+			template_service = #{servername} and template_code =#{intent} and app_id =#{appid}
+		</where>
+	</select>
+
+	<select id="getSemanticSlots" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM ai_dialog_slot ORDER BY slot_order ASC;
+	</select>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.hengda.app.mapper.MessageReplyDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="MessageReply" type="com.pl.hengda.app.model.MessageReply">
+        <result column="id" property="id"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+    <select id="getMRs" resultType="com.pl.hengda.app.model.MessageReply">
+      select * from message_reply
+    </select>
+
+
+    <select id="getMRById" parameterType="map" resultType="com.pl.hengda.app.model.MessageReply">
+        select * from message_reply where id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.hengda.app.mapper.TodoDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="Todo" type="com.pl.hengda.app.model.Todo">
+        <result column="userid" property="userid" />
+        <result column="name" property="name" />
+        <result column="todotask" property="todotask" />
+        <result column="date" property="date" />
+    </resultMap>
+
+    <select id="getTodoByUserid" resultType="com.pl.hengda.app.model.Todo">
+        select * from todo where userid = #{userid} and date = #{date}
+    </select>
+</mapper>

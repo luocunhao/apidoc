@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pl.hengda.app.mapper.UserDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="User" type="com.pl.hengda.app.model.User">
+        <result column="userid" property="userid" />
+        <result column="name" property="name" />
+        <result column="sex" property="sex" />
+        <result column="phone" property="phone" />
+        <result column="age" property="age" />
+        <result column="position" property="position" />
+        <result column="department" property="department" />
+        <result column="nickname" property="nickname" />
+        <result column="vip_flag" property="vip_flag" />
+        <result column="when" property="when" />
+        <result column="idcard" property="idcard" />
+        <result column="reason" property="reason" />
+        <result column="company" property="company" />
+        <result column="isoldCus" property="isoldCus" />
+        <result column="channel" property="channel" />
+    </resultMap>
+
+    <resultMap id="Huashu" type="com.pl.hengda.app.model.Huashu">
+        <result column="id" property="id"/>
+        <result column="vip_flag" property="vip_flag"/>
+        <result column="huashu" property="huashu"/>
+    </resultMap>
+
+    <select id="getUserList" resultType="com.pl.hengda.app.model.User">
+       select * from userinfo
+    </select>
+    <select id="getUserByPinyin" resultType="com.pl.hengda.app.model.User" parameterType="map">
+        select * from userinfo where pinyin = #{pinyinname} and vip_flag <![CDATA[ <> ]]>'3'
+    </select>
+    <select id="getUserById" resultType="com.pl.hengda.app.model.User" parameterType="map">
+        select * from userinfo where userid = #{userid}
+    </select>
+    <select id="getHuashuByVipflag" resultType="com.pl.hengda.app.model.Huashu" parameterType="map">
+      select * from huashu where vip_flag = #{vip_flag}
+    </select>
+    <insert id="addUser" parameterType="com.pl.hengda.app.model.User">
+        insert into userinfo(userid,name,sex,phone,age,position,department,nickname,vip_flag,pinyin,idcard,reason,company,channel)
+        VALUES (#{userid},#{name},#{sex},#{phone},#{age},#{position},#{department},#{nickname},#{vip_flag},#{pinyin},#{idcard},#{reason},#{company},#{channel})
+    </insert>
+    <update id="updateUserById" parameterType="com.pl.hengda.app.model.User">
+        update userinfo set name=#{name},sex=#{sex},phone=#{phone},age=#{age},position=#{position},department=#{department},nickname=#{nickname},
+        vip_flag=#{vip_flag},pinyin=#{pinyin},idcard=#{idcard},reason=#{reason},company=#{company},channel=#{channel} where userid = #{userid}
+    </update>
+
+    <select id="getConsultant" resultType="com.pl.hengda.app.model.Consultant">
+        select * from zhiyeguwen
+    </select>
+</mapper>
